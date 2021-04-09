@@ -1,3 +1,3 @@
 # conweb-alexa
 
-run npm install before executing
+run `npm install` to install all the dependencies
