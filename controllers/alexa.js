@@ -65,7 +65,3 @@ const skillBuilder = Alexa.SkillBuilders.custom()
 
 const skill = skillBuilder.create();
 module.exports = skill;
-
-/*
-exports.handler = .create();
-*/
