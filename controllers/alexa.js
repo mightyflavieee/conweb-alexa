@@ -1,5 +1,6 @@
 const Alexa = require('ask-sdk');
 const https = require('https');
+const ws = require('ws');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -11,7 +12,7 @@ const LaunchRequestHandler = {
       .reprompt('I didn\'t catch that. What can I help you with?')
       .getResponse();
   },
-}; // End LaunchRequestHandler
+};
 
 const StopRequestHandler = {
   canHandle(handlerInput) {
@@ -36,7 +37,8 @@ const SendMessageRequestHandler = {
   },
   async handle(handlerInput) {
     const message = handlerInput.requestEnvelope.request.intent.slots.message.value;
-    let returnMessage = '';
+
+    /*let returnMessage = '';
     await new Promise((resolve, reject) => {
       https.get('https://www.google.com', function(res) {
         res.setEncoding('utf8');
@@ -47,11 +49,17 @@ const SendMessageRequestHandler = {
           resolve();
         });
       });
-    });
+    });*/
 
+    let socket = new WebSocket("wss://localhost/alexa:8080");
+    console.log("Connection established with Python Bot");
+    socket.send(message);
+    socket.onmessage = (event) => {
+      socket.close();
+      return handlerInput.responseBuilder.speak(event.data).reprompt().getResponse();;
+    }
 
-    return handlerInput.responseBuilder.speak('Called api: ' + returnMessage).reprompt().getResponse();
-
+    // return handlerInput.responseBuilder.speak('Called api: ' + returnMessage).reprompt().getResponse();
   },
 };
 
