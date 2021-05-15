@@ -1,4 +1,4 @@
-const ws = require("ws");
+const WebSocket = require("ws");
 
 class PrivateBotConnector {
   constructor() {
@@ -10,7 +10,7 @@ class PrivateBotConnector {
   addConnection(id) {
     try {
       console.log(`Adding connection ${id}`);
-      const socketConnection = new ws.WebSocket("wss://localhost/browse:5050")
+      const socketConnection = new WebSocket("wss://localhost/browse:5050")
         .onopen((socket) => console.log(socket))
         .onclose((event) => console.log(event));
       this.connections.push({
