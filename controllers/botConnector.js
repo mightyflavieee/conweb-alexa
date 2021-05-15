@@ -1,18 +1,4 @@
-///
-/*.exports = {
-    const connections : [],
-
-    function create/*Connection(id){
-        let socket = new WebSocket("wss://localhost/alexa:8080");
-        console.log("Connection established with Python Bot");
-        socket.onmessage = (event) => {};
-        connections.push({
-            id: id
-        });
-    }
-};
-
-*/
+const ws = require("ws");
 
 class PrivateBotConnector {
   constructor() {
@@ -22,18 +8,17 @@ class PrivateBotConnector {
   connections = [];
 
   addConnection(id) {
-    try{
-        console.log(`Adding connection ${id}`);
-        const socketConnection = new WebSocket("wss://localhost/browse:5050")
-          .onopen((socket) => console.log(socket))
-          .onclose((event) => console.log(event));
-        this.connections.push({
-          id: socketConnection,
-        });
-    } catch (err){
-        console.log(err.stack)
+    try {
+      console.log(`Adding connection ${id}`);
+      const socketConnection = new ws.WebSocket("wss://localhost/browse:5050")
+        .onopen((socket) => console.log(socket))
+        .onclose((event) => console.log(event));
+      this.connections.push({
+        id: socketConnection,
+      });
+    } catch (err) {
+      console.log(err.stack);
     }
-
   }
 
   getConnection(id) {
