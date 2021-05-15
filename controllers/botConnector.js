@@ -10,9 +10,9 @@ class PrivateBotConnector {
   addConnection(id) {
     try {
       console.log(`Adding connection ${id}`);
-      const socketConnection = new WebSocket("wss://localhost/browse:5050")
-        .onopen((socket) => console.log(socket))
-        .onclose((event) => console.log(event));
+      const socketConnection = new WebSocket("wss://localhost/browse:5050");
+      socketConnection.on("open", () => console.log("Socket connected."));
+      socketConnection.on("close", () => console.log("Socket closed."));
       this.connections.push({
         id: socketConnection,
       });
