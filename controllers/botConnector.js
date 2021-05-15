@@ -22,6 +22,7 @@ class PrivateBotConnector {
   connections = [];
 
   addConnection(id) {
+    console.log(`Adding connection ${id}`);
     const socketConnection = new WebSocket("wss://localhost/browse:5050")
       .onclose((event) => console.log(event))
       .onopen((socket) => console.log(socket));
@@ -31,6 +32,7 @@ class PrivateBotConnector {
   }
 
   getConnection(id) {
+    console.log(`Retrieving connection ${id}`);
     return this.connections.find((map) => map.id === id);
   }
 }
