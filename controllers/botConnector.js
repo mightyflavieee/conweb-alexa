@@ -10,7 +10,10 @@ class PrivateBotConnector {
   addConnection(id) {
     try {
       console.log(`Adding connection ${id}`);
-      const socketConnection = new WebSocket("wss://localhost/browse:5050");
+      const socketConnection = new WebSocket("wss://localhost/browse:8000");
+      socketConnection.on("error", () =>
+        console.log("Something went wrong in the socket connection.")
+      );
       socketConnection.on("open", () => console.log("Socket connected."));
       socketConnection.on("close", () => console.log("Socket closed."));
       this.connections.push({
