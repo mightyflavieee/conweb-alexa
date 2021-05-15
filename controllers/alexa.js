@@ -1,7 +1,7 @@
 const Alexa = require("ask-sdk");
 const https = require("https");
 const ws = require("ws");
-const botConnector = require("./botConnector");
+const BotConnector = require("./botConnector");
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {

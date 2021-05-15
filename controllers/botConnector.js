@@ -22,13 +22,18 @@ class PrivateBotConnector {
   connections = [];
 
   addConnection(id) {
-    console.log(`Adding connection ${id}`);
-    const socketConnection = new WebSocket("wss://localhost/browse:5050")
-      .onclose((event) => console.log(event))
-      .onopen((socket) => console.log(socket));
-    this.connections.push({
-      id: socketConnection,
-    });
+    try{
+        console.log(`Adding connection ${id}`);
+        const socketConnection = new WebSocket("wss://localhost/browse:5050")
+          .onopen((socket) => console.log(socket))
+          .onclose((event) => console.log(event));
+        this.connections.push({
+          id: socketConnection,
+        });
+    } catch (err){
+        console.log(err.stack)
+    }
+
   }
 
   getConnection(id) {
