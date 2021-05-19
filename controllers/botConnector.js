@@ -15,7 +15,7 @@ class PrivateBotConnector {
         console.log("Something went wrong in the socket connection.")
       );
       socketConnection.on("open", () => console.log("Socket connected."));
-      socketConnection.on("close", () => console.log("Socket closed."));
+      socketConnection.on("close", () => this.removeConnection(id));
       this.connections.push({
         id: id,
         socket: socketConnection,
@@ -23,6 +23,10 @@ class PrivateBotConnector {
     } catch (err) {
       console.log(err.stack);
     }
+  }
+
+  removeConnection(id){
+    this.connections = connections.filter(conn=>conn.id != id);
   }
 
   getConnection(id) {
