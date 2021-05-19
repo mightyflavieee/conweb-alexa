@@ -47,7 +47,6 @@ const SendMessageRequestHandler = {
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
-
     connection.send(message);
 
     const response = await new Promise((resolve, reject) => {
