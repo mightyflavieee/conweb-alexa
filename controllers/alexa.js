@@ -50,7 +50,7 @@ const SendMessageRequestHandler = {
 
     connection.on("open", () => connection.send(message));
 
-    const response;
+    let response = 'test';
     connection.on("message", (data) => response = data);
 
     /*const response = await new Promise((resolve, reject) => {
