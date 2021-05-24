@@ -82,11 +82,14 @@ const OpenWebpageRequestHandler = {
     const response = await new Promise((resolve, reject) => {
       connection.on("page_loaded", (response) => resolve(response));
     });
-    console.log(response);
-    return handlerInput.responseBuilder
-      .speak(response)
-      .reprompt()
-      .getResponse();
+    if (response.status == "OK") {
+      return handlerInput.responseBuilder
+        .speak(
+          "Web Page opened. Say 'send what can I do here' to see all the options."
+        )
+        .reprompt()
+        .getResponse();
+    }
   },
 };
 
