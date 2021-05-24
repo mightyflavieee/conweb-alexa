@@ -82,6 +82,7 @@ const OpenWebpageRequestHandler = {
     const response = await new Promise((resolve, reject) => {
       connection.on("page_loaded", (response) => resolve(response));
     });
+    console.log(response);
     if (response.status == "OK") {
       return handlerInput.responseBuilder
         .speak(
