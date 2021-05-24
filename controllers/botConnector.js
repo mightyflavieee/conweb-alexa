@@ -1,4 +1,4 @@
-const WebSocket = require("ws");
+const io = require("socket.io-client");
 
 class PrivateBotConnector {
   constructor() {
@@ -10,12 +10,15 @@ class PrivateBotConnector {
   addConnection(id) {
     try {
       console.log(`Adding connection ${id}`);
-      const socketConnection = new WebSocket("ws://localhost:6666");
-      socketConnection.on("error", () =>
-        console.log("Something went wrong in the socket connection.")
-      );
-      socketConnection.on("open", () => console.log("Socket connected."));
-      socketConnection.on("close", () => this.removeConnection(id));
+      const socketConnection = io("http://localhost:8000/browse",{ 
+        transports : [ "websocket", "polling"],
+        pingTimeout: 10000,
+        pingInterval: 30000,
+        forceNew : false
+      });
+      socket.on('connect', () => console.log("Successfully connected to the server."));
+      socketConnection.on('connect_error', err => { console.log("Something went wrong in the socket connection.", err); });
+      socket.on("disconnect", () => this.removeConnection(id));
       this.connections.push({
         id: id,
         socket: socketConnection,

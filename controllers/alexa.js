@@ -1,5 +1,6 @@
 const Alexa = require("ask-sdk");
 const https = require("https");
+const io = require("socket.io-client");
 const BotConnector = require("./botConnector");
 
 const LaunchRequestHandler = {
@@ -47,10 +48,10 @@ const SendMessageRequestHandler = {
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
-    connection.send(message);
+    connection.emit("send_request", user_request);
 
     const response = await new Promise((resolve, reject) => {
-      connection.on("message", (response) => resolve(response));
+      connection.on("response_ready", (response) => resolve(response));
     });
 
     return handlerInput.responseBuilder
