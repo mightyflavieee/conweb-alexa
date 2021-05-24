@@ -82,7 +82,7 @@ const OpenWebpageRequestHandler = {
     const response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
     });
-
+    console.log(response);
     return handlerInput.responseBuilder
       .speak(response)
       .reprompt()
