@@ -74,11 +74,12 @@ const OpenWebpageRequestHandler = {
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
+    console.log("initialized connection");
     connection.emit(
       "open_page",
       "http://conweb.mateine.org/examples/index.html"
     );
-
+    console.log("sended to python bot");
     const response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
     });
