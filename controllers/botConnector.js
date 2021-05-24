@@ -16,9 +16,9 @@ class PrivateBotConnector {
         pingInterval: 30000,
         forceNew : false
       });
-      socket.on('connect', () => console.log("Successfully connected to the server."));
+      socketConnection.on('connect', () => console.log("Successfully connected to the server."));
       socketConnection.on('connect_error', err => { console.log("Something went wrong in the socket connection.", err); });
-      socket.on("disconnect", () => this.removeConnection(id));
+      socketConnection.on("disconnect", () => this.removeConnection(id));
       this.connections.push({
         id: id,
         socket: socketConnection,
