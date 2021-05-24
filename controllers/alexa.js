@@ -48,7 +48,7 @@ const SendMessageRequestHandler = {
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
-    connection.emit("send_request", user_request);
+    connection.emit("send_request", { request: user_request });
 
     const response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
@@ -80,7 +80,7 @@ const OpenWebpageRequestHandler = {
     });
     console.log("sended to python bot");
     const response = await new Promise((resolve, reject) => {
-      connection.on("response_ready", (response) => resolve(response));
+      connection.on("page_loaded", (response) => resolve(response));
     });
     console.log(response);
     return handlerInput.responseBuilder
