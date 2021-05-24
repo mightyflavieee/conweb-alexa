@@ -61,12 +61,42 @@ const SendMessageRequestHandler = {
   },
 };
 
+const OpenWebpageRequestHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return (
+      request.type === "IntentRequest" && request.intent.name === "OpenWebpage"
+    );
+  },
+  async handle(handlerInput) {
+    //const url = handlerInput.requestEnvelope.request.intent.slots.url.value;
+    // custom url is not possible for the moment
+    const idConnection = handlerInput.requestEnvelope.session.user.userId;
+    const connector = BotConnector.getInstance();
+    const connection = connector.getConnection(idConnection);
+    connection.emit(
+      "open_page",
+      "http://conweb.mateine.org/examples/index.html"
+    );
+
+    const response = await new Promise((resolve, reject) => {
+      connection.on("response_ready", (response) => resolve(response));
+    });
+
+    return handlerInput.responseBuilder
+      .speak(response)
+      .reprompt()
+      .getResponse();
+  },
+};
+
 const skillBuilder = Alexa.SkillBuilders.custom()
   .withSkillId("amzn1.ask.skill.70b73154-805a-4ef4-bd91-3ccb95f548ce")
   .addRequestHandlers(
     LaunchRequestHandler,
     StopRequestHandler,
-    SendMessageRequestHandler
+    SendMessageRequestHandler,
+    OpenWebpageRequestHandler
   );
 
 const skill = skillBuilder.create();
