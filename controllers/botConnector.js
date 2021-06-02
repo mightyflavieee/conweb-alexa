@@ -22,6 +22,7 @@ class PrivateBotConnector {
       this.connections.push({
         id: id,
         socket: socketConnection,
+        readyMessage: false,
       });
     } catch (err) {
       console.log(err.stack);
