@@ -57,7 +57,7 @@ const SendMessageRequestHandler = {
     });
     console.log(util.inspect(response, false, null, true))
 
-    //To anyone seeing this, I am sorry, I hope this would be deleted from the world soon.
+    //To anyone seeing this, I am sorry, I hope this will be deleted from the world soon.
     if(response.response.response.options && Array.isArray(response.response.response.options)){
       response = VoiceHelper.list(response.response.response.options);
     } else {
