@@ -63,6 +63,8 @@ const SendMessageRequestHandler = {
     } else {
       if(response.response.response.response.response.options && Array.isArray(response.response.response.response.response.options)){
         response = VoiceHelper.list(response.response.response.response.response.options);
+      } else {
+        response = VoiceHelper.list(response.response.response.response.content);
       }
     }
 
