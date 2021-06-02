@@ -2,7 +2,7 @@ const Alexa = require("ask-sdk");
 const https = require("https");
 const io = require("socket.io-client");
 const BotConnector = require("./botConnector");
-const VoiceHelper = require("../helpers/alexa-voice-helper")();
+const VoiceHelper = require("../helpers/alexa-voice-helper");
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
