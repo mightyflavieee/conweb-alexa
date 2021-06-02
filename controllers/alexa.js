@@ -2,6 +2,7 @@ const Alexa = require("ask-sdk");
 const https = require("https");
 const io = require("socket.io-client");
 const BotConnector = require("./botConnector");
+const VoiceHelper = require("../helpers/alexa-voice-helper");
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -79,7 +80,7 @@ const CheckReadyRequestHandler = {
       return handlerInput.responseBuilder.speak(readyMessage).reprompt().
       getResponse();
     } else {
-      return handlerInput.responseBuilder.speak('Bot is not ready yet.').reprompt()
+      return handlerInput.responseBuilder.speak(VoiceHelper.disappointed('Bot is not ready yet.')).reprompt()
       .getResponse();
     }
   }
@@ -103,7 +104,7 @@ const OpenWebpageRequestHandler = {
     });
     connection.on("page_loaded", (response)=>{
       console.log("page loaded");
-      connector.addReadyMessage(idConnection, "Page is loaded now. I am ready.")
+      connector.addReadyMessage(idConnection, VoiceHelper.excited("Page is loaded now. I am ready."))
     });
     return handlerInput.responseBuilder.speak("I have sent open request to framework.").reprompt().getResponse();
   },
