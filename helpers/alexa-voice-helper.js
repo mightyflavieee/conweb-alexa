@@ -15,8 +15,8 @@ class VoiceHelper {
     }
 
     static list(messageList){
-        const finalMessage = "";
-        for(message of messageList){
+        let finalMessage = "";
+        for(const message of messageList){
             finalMessage += this.paragraph(message);
         }
         return finalMessage;
