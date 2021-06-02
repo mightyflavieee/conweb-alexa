@@ -50,10 +50,11 @@ const SendMessageRequestHandler = {
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
     connection.emit("send_request", { request: message });
-    const response = await new Promise((resolve, reject) => {
+    let response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
     });
     if(response.response.response.options && Array.isArray(response.response.response.options)){
+      console.log("is array");
       response = VoiceHelper.list(response.response.response.options);
     }
     console.log(response);
