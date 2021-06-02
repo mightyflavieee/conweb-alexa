@@ -74,9 +74,11 @@ const CheckReadyRequestHandler = {
     const connector = BotConnector.getInstance();
     const readyMessage = connector.getReadyMessage(idConnection);
     if(readyMessage){
-      return handlerInput.responseBuilder.speak(readyMessage).getResponse();
+      return handlerInput.responseBuilder.speak(readyMessage).reprompt().
+      getResponse();
     } else {
-      return handlerInput.responseBuilder.speak('Bot is not ready yet.').getResonse();
+      return handlerInput.responseBuilder.speak('Bot is not ready yet.').reprompt()
+      .getResonse();
     }
   }
 };
