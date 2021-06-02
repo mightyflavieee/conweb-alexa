@@ -3,6 +3,8 @@ const https = require("https");
 const io = require("socket.io-client");
 const BotConnector = require("./botConnector");
 const VoiceHelper = require("../helpers/alexa-voice-helper");
+const util = require('util')
+
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -53,11 +55,10 @@ const SendMessageRequestHandler = {
     let response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
     });
+    console.log(util.inspect(response, false, null, true))
     if(response.response.response.options && Array.isArray(response.response.response.options)){
-      console.log("is array");
       response = VoiceHelper.list(response.response.response.options);
     }
-    console.log(response);
     return handlerInput.responseBuilder
       .speak(response)
       .reprompt()
