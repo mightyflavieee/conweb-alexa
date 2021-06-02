@@ -7,11 +7,23 @@ class VoiceHelper {
     };
 
     static disappointed(message){
-        return `<amazon:emotion name="disappointed" intensity="medium">${message}</amazon:emotion>`;
+        return `<amazon:emotion name="disappointed" intensity="high">${message}</amazon:emotion>`;
     }
 
     static excited(message){
-        return `<amazon:emotion name="excited" intensity="medium">${message}</amazon:emotion>`;
+        return `<amazon:emotion name="excited" intensity="high">${message}</amazon:emotion>`;
+    }
+
+    static list(messageList){
+        const finalMessage = "";
+        for(message of messageList){
+            finalMessage += this.paragraph(message);
+        }
+        return finalMessage;
+    }
+
+    static paragraph(message){
+        return `<p>${message}</p>`;
     }
 }
 

@@ -54,8 +54,9 @@ const SendMessageRequestHandler = {
     const response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
     });
-    console.log(response.response.response.options);
-
+    if(response.response.response.options && Array.isArray(response.response.response.options)){
+      response = VoiceHelper.list(response);
+    }
     return handlerInput.responseBuilder
       .speak(response)
       .reprompt()
