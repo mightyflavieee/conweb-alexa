@@ -61,6 +61,26 @@ const SendMessageRequestHandler = {
   },
 };
 
+const CheckReadyRequestHandler = {
+  canHandle(handlerInput){
+    const request = handlerInput.requestEnvelope.request;
+    return (
+      request.type === "IntentRequest" && request.intent.name === "CheckReady"
+    );
+  },
+
+  async handle(handlerInput){
+    const idConnection = handlerInput.requestEnvelope.session.user.userId;
+    const connector = BotConnector.getInstance();
+    const readyMessage = connector.getReadyMessage(idConnection);
+    if(readyMessage){
+      return handlerInput.responseBuilder.speak(readyMessage).getResponse();
+    } else {
+      return handlerInput.responseBuilder.speak('Bot is not ready yet.').getResonse();
+    }
+  }
+};
+
 const OpenWebpageRequestHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
@@ -74,23 +94,13 @@ const OpenWebpageRequestHandler = {
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
-    console.log("initialized connection");
     connection.emit("open_page", {
       url: "http://conweb.mateine.org/examples/index.html",
     });
-    console.log("sended to python bot");
-    const response = await new Promise((resolve, reject) => {
-      connection.on("page_loaded", (response) => resolve(response));
+    connection.on("page_loaded", (response)=>{
+      connector.addReadyMessage(idConnection, "Page is loaded now. I am ready.")
     });
-    console.log(response);
-    if (response.status == "OK") {
-      return handlerInput.responseBuilder
-        .speak(
-          "Web Page opened. Say 'send what can I do here' to see all the options."
-        )
-        .reprompt()
-        .getResponse();
-    }
+    return handlerInput.responseBuilder.speak("I have sent open request to framework.").reprompt().getResponse();
   },
 };
 
@@ -100,7 +110,8 @@ const skillBuilder = Alexa.SkillBuilders.custom()
     LaunchRequestHandler,
     StopRequestHandler,
     SendMessageRequestHandler,
-    OpenWebpageRequestHandler
+    OpenWebpageRequestHandler,
+    CheckReadyRequestHandler
   );
 
 const skill = skillBuilder.create();

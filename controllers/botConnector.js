@@ -28,6 +28,10 @@ class PrivateBotConnector {
     }
   }
 
+  addReadyMessage(id, message){
+    this.connections.find((map)=>map.id === id).readyMessage = message;
+  }
+
   removeConnection(id){
     this.connections = connections.filter(conn=>conn.id != id);
   }
@@ -35,6 +39,10 @@ class PrivateBotConnector {
   getConnection(id) {
     console.log(`Retrieving connection ${id}`);
     return this.connections.find((map) => map.id === id).socket;
+  }
+
+  getReadyMessage(id){
+    return this.connections.find((map) => map.id === id).readyMessage;
   }
 }
 
