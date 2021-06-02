@@ -49,10 +49,11 @@ const SendMessageRequestHandler = {
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
     connection.emit("send_request", { request: message });
-
+    console.log(message);
     const response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
     });
+    console.log(response);
 
     return handlerInput.responseBuilder
       .speak(response)
