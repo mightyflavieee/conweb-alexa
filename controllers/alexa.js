@@ -53,7 +53,7 @@ const SendMessageRequestHandler = {
     const response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
     });
-    console.log(response.response.options);
+    console.log(response.response.response.options);
 
     return handlerInput.responseBuilder
       .speak(response)
