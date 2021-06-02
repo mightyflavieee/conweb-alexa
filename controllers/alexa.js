@@ -56,9 +56,17 @@ const SendMessageRequestHandler = {
       connection.on("response_ready", (response) => resolve(response));
     });
     console.log(util.inspect(response, false, null, true))
+
+    //To anyone seeing this, I am sorry, I hope this would be deleted from the world soon.
     if(response.response.response.options && Array.isArray(response.response.response.options)){
       response = VoiceHelper.list(response.response.response.options);
+    } else {
+      if(response.response.response.response.options && Array.isArray(response.response.response.response.options)){
+        response = VoiceHelper.list(response.response.response.response.options);
+      }
     }
+
+
     return handlerInput.responseBuilder
       .speak(response)
       .reprompt()
