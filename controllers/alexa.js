@@ -79,7 +79,7 @@ const CheckReadyRequestHandler = {
       getResponse();
     } else {
       return handlerInput.responseBuilder.speak('Bot is not ready yet.').reprompt()
-      .getResonse();
+      .getResponse();
     }
   }
 };
