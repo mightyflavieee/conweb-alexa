@@ -2,7 +2,7 @@ const Alexa = require("ask-sdk");
 const https = require("https");
 const io = require("socket.io-client");
 const BotConnector = require("./botConnector");
-const VoiceHelper = require("../helpers/alexa-voice-helper");
+const VoiceHelper = require("../helpers/alexa-voice-helper")();
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -75,12 +75,10 @@ const CheckReadyRequestHandler = {
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     const connector = BotConnector.getInstance();
     const readyMessage = connector.getReadyMessage(idConnection);
-    console.log("RM: "+readyMessage);
     if(readyMessage){
       return handlerInput.responseBuilder.speak(readyMessage).reprompt().
       getResponse();
     } else {
-      console.log(VoiceHelper.disappointed('Bot is not ready yet.'));
       return handlerInput.responseBuilder.speak(VoiceHelper.disappointed('Bot is not ready yet.')).reprompt()
       .getResponse();
     }
