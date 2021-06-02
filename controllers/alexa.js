@@ -54,8 +54,9 @@ const SendMessageRequestHandler = {
     connection.emit("send_request", { request: message });
     let response = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
-      console.log(util.inspect(response, false, null, true));
     });
+
+    console.log(util.inspect(response, false, null, true));
 
     //To anyone seeing this, I am sorry, I hope this will be deleted from the world soon.
     if(response.response.response.options && Array.isArray(response.response.response.options)){
