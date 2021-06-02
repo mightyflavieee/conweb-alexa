@@ -55,7 +55,7 @@ const SendMessageRequestHandler = {
       connection.on("response_ready", (response) => resolve(response));
     });
     if(response.response.response.options && Array.isArray(response.response.response.options)){
-      response = VoiceHelper.list(response);
+      response = VoiceHelper.list(response.response.response.options);
     }
     return handlerInput.responseBuilder
       .speak(response)
