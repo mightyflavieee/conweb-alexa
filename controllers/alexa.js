@@ -63,6 +63,7 @@ const SendMessageRequestHandler = {
       console.log("what can i do here")
       response = VoiceHelper.list(response.response.response.options);
     } else {
+      console.log("first else")
       if(response.response.response.response.response.options && Array.isArray(response.response.response.response.response.options)){
         console.log("tell me about the paper")
         response = VoiceHelper.list(response.response.response.response.response.options);
