@@ -80,6 +80,7 @@ const CheckReadyRequestHandler = {
       return handlerInput.responseBuilder.speak(readyMessage).reprompt().
       getResponse();
     } else {
+      console.log(VoiceHelper.disappointed('Bot is not ready yet.'));
       return handlerInput.responseBuilder.speak(VoiceHelper.disappointed('Bot is not ready yet.')).reprompt()
       .getResponse();
     }
