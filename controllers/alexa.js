@@ -59,11 +59,14 @@ const SendMessageRequestHandler = {
 
     //To anyone seeing this, I am sorry, I hope this will be deleted from the world soon.
     if(response.response.response.options && Array.isArray(response.response.response.options)){
+      console.log("what can i do here")
       response = VoiceHelper.list(response.response.response.options);
     } else {
       if(response.response.response.response.response.options && Array.isArray(response.response.response.response.response.options)){
+        console.log("tell me about the paper")
         response = VoiceHelper.list(response.response.response.response.response.options);
       } else {
+        console.log("tell me about the summary")
         response = VoiceHelper.list(response.response.response.response.content);
       }
     }
