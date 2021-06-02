@@ -61,8 +61,8 @@ const SendMessageRequestHandler = {
     if(response.response.response.options && Array.isArray(response.response.response.options)){
       response = VoiceHelper.list(response.response.response.options);
     } else {
-      if(response.response.response.response.options && Array.isArray(response.response.response.response.options)){
-        response = VoiceHelper.list(response.response.response.response.options);
+      if(response.response.response.response.response.options && Array.isArray(response.response.response.response.response.options)){
+        response = VoiceHelper.list(response.response.response.response.response.options);
       }
     }
 
