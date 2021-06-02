@@ -33,7 +33,7 @@ class PrivateBotConnector {
   }
 
   removeConnection(id){
-    this.connections = connections.filter(conn=>conn.id != id);
+    this.connections = this.connections.filter(conn=>conn.id != id);
   }
 
   getConnection(id) {
