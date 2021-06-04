@@ -17,7 +17,7 @@ class PrivateBotConnector {
         forceNew : false
       });
       socketConnection.on('connect', () => {
-        console.log("Successfully connected to the server.");
+        console.log("Added connection to the framework");
         socketConnection.emit("start_session", {user: id});
       });
       socketConnection.on('session_ready', ()=>{
