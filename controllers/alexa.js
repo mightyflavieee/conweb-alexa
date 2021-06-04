@@ -11,6 +11,7 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === "LaunchRequest";
   },
   handle(handlerInput) {
+    console.log("LaunchRequest received");
     const connector = BotConnector.getInstance();
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     connector.addConnection(idConnection);
@@ -47,7 +48,7 @@ const SendMessageRequestHandler = {
   async handle(handlerInput) {
     const message =
       handlerInput.requestEnvelope.request.intent.slots.message.value;
-
+    console.log("SendRequest recevied");
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
