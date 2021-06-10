@@ -53,30 +53,24 @@ const SendMessageRequestHandler = {
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
     connection.emit("send_request", { request: message });
-    let response = await new Promise((resolve, reject) => {
+    const frameworkResponse = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
     });
+    const response = frameworkResponse.response.response;
+    let toAlexa;
 
     console.log(util.inspect(response, false, null, true));
-
-    //To anyone seeing this, I am sorry, I hope this will be deleted from the world soon.
-    if(response.response.response.options && Array.isArray(response.response.response.options)){
-      console.log("what can i do here")
-      response = VoiceHelper.list(response.response.response.options);
-    } else {
-      console.log("first else")
-      if(response.response.response.response.response.options && Array.isArray(response.response.response.response.response.options)){
-        console.log("tell me about the paper")
-        response = VoiceHelper.list(response.response.response.response.response.options);
+    if(response){
+      if(response.content){
+        toAlexa = VoiceHelper.list(response.content);
       } else {
-        console.log("tell me about the summary")
-        response = VoiceHelper.list(response.response.response.response.content);
+        toAlexa = VoiceHelper.list(response.options);
       }
     }
 
 
     return handlerInput.responseBuilder
-      .speak(response)
+      .speak(toAlexa)
       .reprompt()
       .getResponse();
   },
