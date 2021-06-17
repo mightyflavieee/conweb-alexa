@@ -55,9 +55,17 @@ const SendMessageRequestHandler = {
     connection.emit("send_request", { request: message });
     const frameworkResponse = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
+
+      console.log("Response fetched");
+      
     });
+
+    console.log(frameworkResponse);
+
     const response = frameworkResponse.response.response;
     let toAlexa;
+
+    console.log(response);
 
     console.log(util.inspect(response, false, null, true));
     if(response){
