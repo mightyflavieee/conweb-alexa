@@ -130,8 +130,10 @@ const OpenWebpageRequestHandler = {
   },
 };
 
+// previous skill id: amzn1.ask.skill.70b73154-805a-4ef4-bd91-3ccb95f548ce
+
 const skillBuilder = Alexa.SkillBuilders.custom()
-  .withSkillId("amzn1.ask.skill.70b73154-805a-4ef4-bd91-3ccb95f548ce")
+  .withSkillId("amzn1.ask.skill.36fd5f85-9efd-4d01-9555-1648dd9bb0ac")
   .addRequestHandlers(
     LaunchRequestHandler,
     StopRequestHandler,
