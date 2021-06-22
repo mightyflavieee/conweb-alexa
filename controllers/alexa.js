@@ -16,7 +16,7 @@ const LaunchRequestHandler = {
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     connector.addConnection(idConnection);
     return handlerInput.responseBuilder
-      .speak("Hi. How can I help you?")
+      .speak("Hi! Welcome to the ConWeb project, which website do you want to open?")
       .reprompt("I didn't catch that. What can I help you with?")
       .getResponse();
   },
@@ -106,6 +106,11 @@ const CheckReadyRequestHandler = {
   }
 };
 
+function getUrlToOpen(url){
+  if(url === "landing") return "http://conweb.mateine.org/2021/site-bot-demo/dist/";
+  return "http://conweb.mateine.org/examples/index.html";
+}
+
 const OpenWebpageRequestHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
@@ -114,19 +119,25 @@ const OpenWebpageRequestHandler = {
     );
   },
   async handle(handlerInput) {
-    //const url = handlerInput.requestEnvelope.request.intent.slots.url.value;
-    // custom url is not possible for the moment
+    const url = handlerInput.requestEnvelope.request.intent.slots.url.value;
     const idConnection = handlerInput.requestEnvelope.session.user.userId;
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
     connection.emit("open_page", {
-      url: "http://conweb.mateine.org/examples/index.html",
+      url: getUrlToOpen(url),
     });
     connection.on("page_loaded", (response)=>{
       console.log("page loaded");
       connector.addReadyMessage(idConnection, VoiceHelper.excited("Page is loaded now. I am ready."))
     });
-    return handlerInput.responseBuilder.speak("I have sent open request to framework.").reprompt().getResponse();
+    const readyMessage = connector.getReadyMessage(idConnection);
+    let message; 
+    if(readyMessage){
+      message = "Page is loaded, I am ready to navigate!";
+    } else {
+      message = "Page is loading, say ready to check the status";
+    }
+    return handlerInput.responseBuilder.speak(message).reprompt().getResponse();
   },
 };
 
