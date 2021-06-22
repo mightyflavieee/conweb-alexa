@@ -5,6 +5,7 @@ const BotConnector = require("./botConnector");
 const VoiceHelper = require("../helpers/alexa-voice-helper");
 const util = require('util')
 
+const repromptMessage = VoiceHelper.emphasis("Hello, are you still there?", "strong")
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -17,7 +18,7 @@ const LaunchRequestHandler = {
     connector.addConnection(idConnection);
     return handlerInput.responseBuilder
       .speak("Hi! Welcome to the ConWeb project, which website do you want to open?")
-      .reprompt("I didn't catch that. What can I help you with?")
+      .reprompt(repromptMessage)
       .getResponse();
   },
 };
@@ -79,7 +80,7 @@ const SendMessageRequestHandler = {
 
     return handlerInput.responseBuilder
       .speak(toAlexa)
-      .reprompt()
+      .reprompt(repromptMessage)
       .getResponse();
   },
 };
@@ -97,10 +98,10 @@ const CheckReadyRequestHandler = {
     const connector = BotConnector.getInstance();
     const readyMessage = connector.getReadyMessage(idConnection);
     if(readyMessage){
-      return handlerInput.responseBuilder.speak(readyMessage).reprompt().
+      return handlerInput.responseBuilder.speak(readyMessage).reprompt(repromptMessage).
       getResponse();
     } else {
-      return handlerInput.responseBuilder.speak(VoiceHelper.disappointed('Bot is not ready yet.')).reprompt()
+      return handlerInput.responseBuilder.speak(VoiceHelper.disappointed('Bot is not ready yet.')).reprompt(repromptMessage)
       .getResponse();
     }
   }
@@ -137,7 +138,7 @@ const OpenWebpageRequestHandler = {
     } else {
       message = "Page is loading, say ready to check the status";
     }
-    return handlerInput.responseBuilder.speak(message).reprompt().getResponse();
+    return handlerInput.responseBuilder.speak(message).reprompt(repromptMessage).getResponse();
   },
 };
 

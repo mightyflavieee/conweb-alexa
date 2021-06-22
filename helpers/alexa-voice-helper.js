@@ -14,6 +14,10 @@ class VoiceHelper {
         return `<amazon:emotion name="excited" intensity="high">${message}</amazon:emotion>`;
     }
 
+    static emphasis(message, level){
+        return `<emphasis level="${level}">${message}</emphasis>`;
+    }
+
     static list(messageList){
         let finalMessage = "";
         for(const message of messageList){
