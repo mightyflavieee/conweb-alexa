@@ -34,7 +34,7 @@ const StopRequestHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak("Ok master. GoodBye.")
+      .speak("Ending navigation, goodbye.")
       .getResponse();
   },
 };
