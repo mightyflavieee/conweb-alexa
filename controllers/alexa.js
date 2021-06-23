@@ -54,19 +54,12 @@ const SendMessageRequestHandler = {
     const connector = BotConnector.getInstance();
     const connection = connector.getConnection(idConnection);
     connection.emit("send_request", { request: message });
-    
-    setTimeout(() => {
-      return handlerInput.responseBuilder
-      .speak("Framework is taking some time, plase retry in few seconds.")
-      .reprompt(repromptMessage)
-      .getResponse();
-    }, 3000);
-
     const frameworkResponse = await new Promise((resolve, reject) => {
       connection.on("response_ready", (response) => resolve(response));
-      console.log("Response fetched");
-    });
 
+      console.log("Response fetched");
+      
+    });
 
     console.log(frameworkResponse);
 
