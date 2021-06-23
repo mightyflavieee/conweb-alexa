@@ -10,6 +10,7 @@ class PrivateBotConnector {
   addConnection(id) {
     try {
       console.log(`Adding connection ${id}`);
+      let isFirstPing = true;
       const socketConnection = io("http://localhost:8000/browse",{ 
         transports : [ "websocket", "polling"],
         pingTimeout: 10000,
@@ -17,8 +18,11 @@ class PrivateBotConnector {
         forceNew : false
       });
       socketConnection.on('connect', () => {
-        console.log("Added connection to the framework");
-        socketConnection.emit("start_session", {user: id});
+        if(isFirstPing){
+          console.log("Added connection to the framework");
+          socketConnection.emit("start_session", {user: id});
+        }
+        isFirstPing = false;
       });
       socketConnection.on('session_ready', ()=>{
         console.log("User session created.");
